@@ -8,21 +8,21 @@ services:
     # the port that we want to publish for mongodb
     ports:
       - "27017:27017"
+    networks:
+      - exam-app
 
     # our mongodb depends on volume to keep the data alive.
     volumes:
       - data:/data/db
 
-    # our environment variable
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: "anas"
-      MONGO_INITDB_ROOT_PASSWORD: "12345"
 
   nginx:
     depends_on:
       - api
       - client
     restart: always
+    networks:
+      - exam-app
     build:
       dockerfile: Dockerfile
       context: ./nginx
@@ -35,6 +35,8 @@ services:
       context: "./server"
     depends_on:
       - mymongodb
+    networks:
+      - exam-app  
     volumes:
       - /app/node_modules
       - ./server:/app
@@ -46,6 +48,14 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./client
+    networks:
+      - exam-app
     volumes:
       - /app/node_modules
       - ./client:/app
+networks:
+  exam-app:
+    driver: bridge
+volumes:
+  mongo-data:
+    driver: local
