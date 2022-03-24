@@ -9,6 +9,10 @@ export default function ForgetPasswordPage() {
       setNumber(event.target.value)
     }
 
+    const submit = (event)=>{
+        
+    }
+
     return (
         <div className="text-center m-5-auto">
             <h2>reba ibiciro niminsi usigaranye</h2>

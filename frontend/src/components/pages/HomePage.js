@@ -1,12 +1,11 @@
-import React, { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useState,useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-export default function HomePage() {
+export default function HomePage(props) {
     const [resp,setresp] = useState();
     const [error,seterror] = useState();
-    const history = useParams()
    useEffect(() => {
-    fetch(`/bill/${history.n}`, {
+    fetch(`/bill/`, {
         // configuration
      })
      .then(response => response.json())

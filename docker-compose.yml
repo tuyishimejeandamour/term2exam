@@ -1,7 +1,7 @@
 version: '1.0'
 
 services:
-  mymongodb:
+  mongo:
     # since mongo is an offical image we can use it.
     image: "mongo"
 
@@ -13,7 +13,7 @@ services:
 
     # our mongodb depends on volume to keep the data alive.
     volumes:
-      - data:/data/db
+      - mongo-data:/data/db
 
 
   nginx:
@@ -34,7 +34,7 @@ services:
       dockerfile: Dockerfile
       context: "./server"
     depends_on:
-      - mymongodb
+      - mongo
     networks:
       - exam-app  
     volumes:
