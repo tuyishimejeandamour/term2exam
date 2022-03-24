@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body,  Param, NotFoundException,} from '@nestjs/
 import { BillService } from './bill.service';
 import { CreateBillDto } from './dto/create-bill.dto';
 
-@Controller('bill')
+@Controller()
 export class BillController {
   constructor(
     private readonly billService: BillService,

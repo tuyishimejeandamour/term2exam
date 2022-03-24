@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import { useHistory } from "react-router-dom";
 import '../../App.css'
 
 export default function ForgetPasswordPage() {
     const [number,setNumber] = useState(null)
+    const history = useHistory();
     const viewdays = (event)=>{
       setNumber(event.target.value)
     }
 
     const submit = (event)=>{
-        
+        history.push(`/ibisubizo?token=${number}`);
     }
 
     return (
