@@ -58,7 +58,7 @@ describe('BillController', () => {
       await expect(controller.create(mockCreateBillDto())).rejects.toThrow(new Error());
     })
 
-    it('should return a video on success', async () => {
+    it('should return a bill on success', async () => {
       const mockReturn =  mockBill() as unknown as any;
       
       jest.spyOn(service, 'create').mockResolvedValueOnce(mockReturn);
@@ -70,7 +70,7 @@ describe('BillController', () => {
   })
 
   describe('findToken()', () => {
-    it('should call VideosService find by id with correct value', async () => {
+    it('should call billService find by id with correct value', async () => {
       const findSpy = jest.spyOn(service, 'findToken');
 
       await controller.findOne('anyid');
@@ -78,13 +78,13 @@ describe('BillController', () => {
       expect(findSpy).toHaveBeenCalledWith('anyid');
     })
 
-    it('should throw if VideosService find by id throws', async () => {
+    it('should throw if billService find by id throws', async () => {
       jest.spyOn(service, 'findToken').mockRejectedValueOnce(new Error());
 
       await expect(controller.findOne('anyid')).rejects.toThrow(new Error());
     })
 
-    it('should return a video on success', async () => {
+    it('should return a bill info', async () => {
       const mockReturn = mockBill() as any
 
       jest.spyOn(service, 'findToken').mockResolvedValueOnce(mockReturn);
