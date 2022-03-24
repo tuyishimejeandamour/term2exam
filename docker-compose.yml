@@ -1,0 +1,51 @@
+version: '1.0'
+
+services:
+  mymongodb:
+    # since mongo is an offical image we can use it.
+    image: "mongo"
+
+    # the port that we want to publish for mongodb
+    ports:
+      - "27017:27017"
+
+    # our mongodb depends on volume to keep the data alive.
+    volumes:
+      - data:/data/db
+
+    # our environment variable
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "anas"
+      MONGO_INITDB_ROOT_PASSWORD: "12345"
+
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - "3050:80"
+
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: "./server"
+    depends_on:
+      - mymongodb
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+
+  client:
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
