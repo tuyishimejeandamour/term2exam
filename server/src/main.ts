@@ -1,23 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { HttpExceptionFilter } from './filters/http-exception.filter';
-import { JWTGuard } from './guards/jwt.guard';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.useGlobalFilters(new HttpExceptionFilter());
-  app.useGlobalGuards(new JWTGuard());
 
-  const options= new DocumentBuilder()
-    .setTitle('Articles')
-    .setDescription('Simple CRUD for managing articles')
+  app.useGlobalPipes(new ValidationPipe());
+
+  // Swagger Docs
+  const config = new DocumentBuilder()
+    .setTitle('Nest API')
+    .setDescription('Nest API Testing')
     .setVersion('1.0')
-    .addTag('articles')
     .build();
 
-  const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('docs', app, document);
+  const document = SwaggerModule.createDocument(app, config);
+
+  SwaggerModule.setup('/docs', app, document);
 
   await app.listen(3000);
 }
